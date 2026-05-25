@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정영석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --cream: #ede8dd;
+    --accent: #ff4d1c;
+    --accent2: #ffc53d;
+    --muted: #6b6560;
+    --border: rgba(245,242,235,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    background: rgba(10,10,10,0.7);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--accent); letter-spacing: 0.05em; }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.4rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: #e03e0f; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    padding: 10rem 3rem 4rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    margin-bottom: 2rem;
+  }
+  .hero-title .line2 { color: var(--accent); }
+  .hero-title .line3 { color: var(--accent2); }
+  .hero-desc {
+    font-size: 0.95rem;
+    color: rgba(245,242,235,0.65);
+    max-width: 36ch;
+    margin-bottom: 2.5rem;
+    line-height: 1.85;
+  }
+  .hero-cta-group { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 1rem 2.2rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #e03e0f; transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--white);
+    font-size: 0.85rem;
+    opacity: 0.6;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(245,242,235,0.3);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+  .btn-ghost:hover { opacity: 1; }
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .code-block {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 2;
+    width: 90%; max-width: 460px;
+    position: relative; z-index: 2;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+  .code-line { white-space: nowrap; }
+  .c-comment { color: #555; }
+  .c-key { color: var(--accent2); }
+  .c-str { color: var(--accent); }
+  .c-fn { color: #7eb8ff; }
+  .c-num { color: #a8e6a3; }
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem; right: -1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(8rem, 18vw, 16rem);
+    color: rgba(255,77,28,0.04);
+    line-height: 1;
+    pointer-events: none; user-select: none;
+    z-index: 1;
+  }
+  .hero-badge {
+    position: absolute; bottom: 3rem; left: 4rem;
+    display: flex; gap: 2rem;
+    z-index: 3;
+  }
+  .badge-item { text-align: center; }
+  .badge-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--accent2); }
+  .badge-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  /* TICKER */
+  .ticker { 
+    background: var(--accent); 
+    padding: 0.65rem 0; 
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner { 
+    display: inline-flex; gap: 3rem;
+    animation: ticker 22s linear infinite;
+  }
+  .ticker-item { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: #fff; }
+  .ticker-dot { color: rgba(255,255,255,0.5); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION */
+  section { padding: 7rem 4rem; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem; height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-desc { font-size: 1rem; color: rgba(245,242,235,0.65); line-height: 2; }
+  .about-desc p + p { margin-top: 1.25rem; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; background: var(--border); }
+  .stat-box {
+    background: var(--black);
+    padding: 2rem;
+    border: 1px solid var(--border);
+  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--accent2); line-height: 1; }
+  .stat-desc { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 0.4rem; }
+
+  /* SCHEDULE */
+  .schedule-bg { background: #0f0e0c; }
+  .days-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-top: 4rem; }
+  .day-card {
+    background: #0f0e0c;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .day-card:hover { background: rgba(255,77,28,0.05); }
+  .day-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem; line-height: 1;
+    color: rgba(245,242,235,0.06);
+    margin-bottom: -1rem;
+  }
+  .day-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
+  .day-title { font-size: 1.1rem; font-weight: 500; margin-bottom: 1.25rem; line-height: 1.4; }
+  .day-tasks { list-style: none; }
+  .day-tasks li {
+    font-size: 0.82rem;
+    color: rgba(245,242,235,0.55);
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+  .day-tasks li::before { content: '→'; color: var(--accent); flex-shrink: 0; font-size: 0.75rem; margin-top: 0.1rem; }
+
+  /* CURRICULUM */
+  .curriculum-list { margin-top: 3rem; }
+  .curr-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .curr-item:hover { padding-left: 0.5rem; }
+  .curr-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--muted); padding-top: 0.2rem; }
+  .curr-title { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .curr-desc { font-size: 0.82rem; color: rgba(245,242,235,0.5); }
+  .curr-tag {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+    align-self: center;
+  }
+  .curr-tag.highlight { border-color: var(--accent); color: var(--accent); }
+
+  /* INSTRUCTOR */
+  .instructor-grid { display: grid; grid-template-columns: auto 1fr; gap: 4rem; align-items: start; margin-top: 4rem; }
+  .instructor-img {
+    width: 240px; height: 300px;
+    background: #1a1915;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(255,197,61,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .instructor-img::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(10,10,10,0.8), transparent);
+  }
+  .instructor-name { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; margin-bottom: 0.4rem; }
+  .instructor-role { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  .instructor-bio { font-size: 0.92rem; color: rgba(245,242,235,0.62); line-height: 2; max-width: 55ch; }
+  .instructor-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .tag {
+    font-size: 0.72rem; letter-spacing: 0.08em;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: rgba(245,242,235,0.6);
+  }
+
+  /* PRICING */
+  .pricing-bg { background: #0f0e0c; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; background: var(--border); margin-top: 4rem; }
+  .price-card {
+    background: #0f0e0c;
+    border: 1px solid var(--border);
+    padding: 3rem;
+  }
+  .price-card.featured { background: var(--accent); border-color: var(--accent); }
+  .price-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .price-card.featured .price-label { color: rgba(255,255,255,0.7); }
+  .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 1; margin-bottom: 0.3rem; }
+  .price-period { font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem; }
+  .price-card.featured .price-period { color: rgba(255,255,255,0.6); }
+  .price-features { list-style: none; }
+  .price-features li {
+    font-size: 0.85rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(245,242,235,0.1);
+    display: flex; align-items: center; gap: 0.6rem;
+    color: rgba(245,242,235,0.7);
+  }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.85); border-bottom-color: rgba(255,255,255,0.15); }
+  .price-features li::before { content: '✓'; color: var(--accent2); font-size: 0.75rem; }
+  .price-card.featured .price-features li::before { color: #fff; }
+  .price-btn {
+    display: block; width: 100%; margin-top: 2.5rem;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.88rem; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .price-btn-outline { background: transparent; border: 1px solid var(--border); color: var(--white); }
+  .price-btn-outline:hover { border-color: var(--white); }
+  .price-btn-solid { background: #fff; border: none; color: var(--accent); }
+  .price-btn-solid:hover { background: var(--cream); }
+
+  /* FAQ */
+  .faq-list { margin-top: 3rem; max-width: 700px; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q {
+    width: 100%; text-align: left;
+    background: none; border: none; color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.95rem; font-weight: 400;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .faq-q:hover { color: var(--accent2); }
+  .faq-arrow { transition: transform 0.3s; font-size: 1.1rem; color: var(--accent); }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 0.87rem;
+    color: rgba(245,242,235,0.6);
+    line-height: 1.9;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.5rem; }
+
+  /* CTA FINAL */
+  .cta-final {
+    text-align: center;
+    padding: 8rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(10rem, 22vw, 20rem);
+    color: rgba(255,77,28,0.04);
+    line-height: 1; white-space: nowrap;
+    pointer-events: none; user-select: none;
+  }
+  .cta-final h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); margin-bottom: 1.5rem; line-height: 1.05; position: relative; z-index: 1; }
+  .cta-final p { font-size: 0.95rem; color: rgba(245,242,235,0.55); max-width: 48ch; margin: 0 auto 2.5rem; position: relative; z-index: 1; }
+  .cta-date { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; position: relative; z-index: 1; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.8s ease both; }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 8rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    .hero-badge { left: 1.5rem; bottom: 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .days-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .instructor-grid { grid-template-columns: 1fr; }
+    .instructor-img { width: 100%; height: 200px; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .cta-final { padding: 5rem 1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .days-grid { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .hero-title { font-size: 3.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">VIBE CODE</div>
+  <a href="#apply" class="nav-cta">지금 신청하기</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding: 0;">
+  <div class="hero-left">
+    <p class="hero-eyebrow fade-up">2025 여름 집중 부트캠프</p>
+    <h1 class="hero-title fade-up delay-1">
+      <span class="line1">바이브</span><br>
+      <span class="line2">코딩</span><br>
+      <span class="line3">3박4일</span>
+    </h1>
+    <p class="hero-desc fade-up delay-2">AI와 함께하는 몰입형 코딩 경험.<br>아이디어를 실제 프로덕트로 만드는<br>4일간의 집중 여정.</p>
+    <div class="hero-cta-group fade-up delay-3">
+      <a href="#apply" class="btn-primary">신청하기 →</a>
+      <a href="#schedule" class="btn-ghost">커리큘럼 보기</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-text">VIBE</div>
+    <div class="code-block">
+      <div class="code-line"><span class="c-comment">// Day 1 — 아이디어 → 설계</span></div>
+      <div class="code-line"><span class="c-key">const</span> <span class="c-fn">idea</span> = <span class="c-str">"세상을 바꿀 앱"</span>;</div>
+      <div class="code-line">&nbsp;</div>
+      <div class="code-line"><span class="c-comment">// Day 2 — AI로 빠르게 빌드</span></div>
+      <div class="code-line"><span class="c-key">await</span> <span class="c-fn">vibeCode</span>(idea, {</div>
+      <div class="code-line">&nbsp; ai: <span class="c-str">"Claude"</span>,</div>
+      <div class="code-line">&nbsp; speed: <span class="c-num">100</span></div>
+      <div class="code-line">});</div>
+      <div class="code-line">&nbsp;</div>
+      <div class="code-line"><span class="c-comment">// Day 3 — 다듬기 & 배포</span></div>
+      <div class="code-line"><span class="c-fn">deploy</span>(<span class="c-str">"production"</span>);</div>
+      <div class="code-line">&nbsp;</div>
+      <div class="code-line"><span class="c-comment">// Day 4 — 데모 & 축하 🚀</span></div>
+      <div class="code-line"><span class="c-fn">celebrate</span>(); <span class="c-comment">// 🎉</span></div>
+    </div>
+  </div>
+  <div class="hero-badge fade-up delay-3">
+    <div class="badge-item">
+      <div class="badge-num">4</div>
+      <div class="badge-label">Days</div>
+    </div>
+    <div class="badge-item">
+      <div class="badge-num">20</div>
+      <div class="badge-label">인원 제한</div>
+    </div>
+    <div class="badge-item">
+      <div class="badge-num">1</div>
+      <div class="badge-label">실제 프로덕트</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">VIBE CODING</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">AI 개발</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">3박 4일 집중</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">아이디어 → 프로덕트</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">VIBE CODING</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">AI 개발</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">3박 4일 집중</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">아이디어 → 프로덕트</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">VIBE CODING</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">AI 개발</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">3박 4일 집중</span><span class="ticker-dot">·</span>
+    <span class="ticker-item">아이디어 → 프로덕트</span><span class="ticker-dot">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section>
+  <div class="about-grid">
+    <div>
+      <p class="section-label">바이브 코딩이란</p>
+      <h2 class="section-title">코딩의<br>새로운 감각</h2>
+      <div class="about-desc">
+        <p>바이브 코딩(Vibe Coding)은 AI와 함께 직관과 흐름으로 코드를 짜는 새로운 개발 방식입니다. 문법 암기보다 아이디어 실현에 집중합니다.</p>
+        <p>3박 4일 동안 실제 제품을 처음부터 배포까지 완성합니다. 경험이 없어도 괜찮습니다. 만들고 싶은 게 있다면 충분합니다.</p>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">96h</div>
+        <div class="stat-desc">집중 개발 시간</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1:5</div>
+        <div class="stat-desc">멘토 : 참가자 비율</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">100%</div>
+        <div class="stat-desc">실제 배포 목표</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">AI</div>
+        <div class="stat-desc">Claude / GPT 활용</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule-bg" id="schedule">
+  <p class="section-label">4일 일정</p>
+  <h2 class="section-title">4일간의<br>여정</h2>
+  <div class="days-grid">
+    <div class="day-card">
+      <div class="day-number">01</div>
+      <div class="day-label">Day 1 — 도착일</div>
+      <div class="day-title">아이디어를<br>설계로</div>
+      <ul class="day-tasks">
+        <li>오리엔테이션 & 팀 빌딩</li>
+        <li>아이디어 피칭 & 선정</li>
+        <li>바이브 코딩 워크숍</li>
+        <li>AI 도구 세팅 & 실습</li>
+        <li>MVP 설계 & 와이어프레임</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-number">02</div>
+      <div class="day-label">Day 2 — 개발 I</div>
+      <div class="day-title">AI로<br>빠르게 빌드</div>
+      <ul class="day-tasks">
+        <li>Cursor/Claude로 코딩 시작</li>
+        <li>프론트엔드 구축</li>
+        <li>백엔드 & DB 연동</li>
+        <li>미드포인트 체크인</li>
+        <li>야간 해킹 세션</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-number">03</div>
+      <div class="day-label">Day 3 — 개발 II</div>
+      <div class="day-title">다듬고<br>배포하기</div>
+      <ul class="day-tasks">
+        <li>핵심 기능 완성</li>
+        <li>UI/UX 개선</li>
+        <li>버그 픽스 & 최적화</li>
+        <li>프로덕션 배포</li>
+        <li>데모 준비 & 리허설</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-number">04</div>
+      <div class="day-label">Day 4 — 마지막 날</div>
+      <div class="day-title">데모 & 다음<br>스텝</div>
+      <ul class="day-tasks">
+        <li>최종 마무리 코딩</li>
+        <li>데모데이 발표</li>
+        <li>심사 & 피드백</li>
+        <li>어워즈 & 네트워킹</li>
+        <li>다음 스텝 로드맵</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section>
+  <p class="section-label">커리큘럼</p>
+  <h2 class="section-title">배우는 것들</h2>
+  <div class="curriculum-list">
+    <div class="curr-item">
+      <div class="curr-num">01</div>
+      <div>
+        <div class="curr-title">AI 프롬프트 엔지니어링</div>
+        <div class="curr-desc">Claude, GPT-4o를 활용한 코드 생성 & 디버깅 전략</div>
+      </div>
+      <span class="curr-tag highlight">필수</span>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">02</div>
+      <div>
+        <div class="curr-title">Cursor IDE 마스터</div>
+        <div class="curr-desc">AI 네이티브 에디터로 10배 빠른 개발 워크플로우</div>
+      </div>
+      <span class="curr-tag highlight">필수</span>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">03</div>
+      <div>
+        <div class="curr-title">풀스택 앱 구조 설계</div>
+        <div class="curr-desc">Next.js + Supabase로 빠르게 프로토타입 만들기</div>
+      </div>
+      <span class="curr-tag">기술</span>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">04</div>
+      <div>
+        <div class="curr-title">배포 & 도메인 연결</div>
+        <div class="curr-desc">Vercel, Netlify로 실제 사용자에게 서비스 런칭</div>
+      </div>
+      <span class="curr-tag">기술</span>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">05</div>
+      <div>
+        <div class="curr-title">프로덕트 씽킹</div>
+        <div class="curr-desc">사용자 문제 정의부터 솔루션 검증까지의 프레임워크</div>
+      </div>
+      <span class="curr-tag">전략</span>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">06</div>
+      <div>
+        <div class="curr-title">데모데이 피칭</div>
+        <div class="curr-desc">투자자/사용자를 설득하는 3분 데모 발표법</div>
+      </div>
+      <span class="curr-tag">발표</span>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section class="schedule-bg">
+  <p class="section-label">강사진</p>
+  <h2 class="section-title">함께하는<br>멘토</h2>
+  <div class="instructor-grid">
+    <div class="instructor-img">💻</div>
+    <div>
+      <div class="instructor-name">김바이브</div>
+      <div class="instructor-role">Lead Instructor · AI Engineer</div>
+      <p class="instructor-bio">
+        스타트업 3곳을 창업하고 AI 개발로 6개월 만에 MAU 50만 서비스를 만들었습니다. 
+        현재 바이브 코딩 커뮤니티를 운영하며 1,000명 이상의 개발자에게 AI 활용법을 가르쳤습니다.
+        "코드를 짜는 게 아니라 제품을 만드는 것" — 이 철학으로 가르칩니다.
+      </p>
+      <div class="instructor-tags">
+        <span class="tag">AI Engineering</span>
+        <span class="tag">Product</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">Cursor</span>
+        <span class="tag">창업</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="apply">
+  <p class="section-label">신청</p>
+  <h2 class="section-title">지금<br>합류하기</h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-label">얼리버드</div>
+      <div class="price-amount">₩890,000</div>
+      <div class="price-period">3박 4일 전체 포함 · 8월 1일까지</div>
+      <ul class="price-features">
+        <li>숙박 3박 전체 포함</li>
+        <li>식사 3끼 × 4일 포함</li>
+        <li>모든 강의 & 워크숍</li>
+        <li>1:5 멘토링 세션</li>
+        <li>수료증 발급</li>
+        <li>커뮤니티 평생 멤버십</li>
+      </ul>
+      <a href="#" class="price-btn price-btn-outline">얼리버드 신청 →</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-label">정가</div>
+      <div class="price-amount">₩1,190,000</div>
+      <div class="price-period">3박 4일 전체 포함</div>
+      <ul class="price-features">
+        <li>숙박 3박 전체 포함</li>
+        <li>식사 3끼 × 4일 포함</li>
+        <li>모든 강의 & 워크숍</li>
+        <li>1:5 멘토링 세션</li>
+        <li>수료증 발급</li>
+        <li>커뮤니티 평생 멤버십</li>
+        <li>1:1 사후 멘토링 1회</li>
+        <li>데모데이 투자자 네트워킹</li>
+      </ul>
+      <a href="#" class="price-btn price-btn-solid">정가 신청 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="schedule-bg">
+  <p class="section-label">자주 묻는 질문</p>
+  <h2 class="section-title">FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">개발 경험이 전혀 없어도 참가할 수 있나요? <span class="faq-arrow">+</span></button>
+      <div class="faq-a">네, 괜찮습니다. 바이브 코딩은 AI를 활용해 코딩 지식이 없어도 프로덕트를 만드는 방법론입니다. 만들고 싶은 아이디어와 열정만 있으면 충분합니다. 다만 컴퓨터를 기본적으로 다룰 수 있어야 합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">장소는 어디인가요? <span class="faq-arrow">+</span></button>
+      <div class="faq-a">서울 근교의 집중력 있는 환경의 리트릿 공간에서 진행됩니다. 신청 완료 후 정확한 장소가 공유됩니다. 서울 주요 지점에서 셔틀버스가 운행됩니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">노트북은 꼭 가져가야 하나요? <span class="faq-arrow">+</span></button>
+      <div class="faq-a">네, 개인 노트북은 필수입니다. 맥북 또는 윈도우 노트북 모두 가능합니다. 최소 8GB RAM을 권장합니다. 사전에 설치해야 할 소프트웨어 목록을 미리 보내드립니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">팀으로 신청할 수 있나요? <span class="faq-arrow">+</span></button>
+      <div class="faq-a">개인 신청이 기본이지만, 팀(2-3인)으로 신청하면 10% 할인을 드립니다. 팀 신청 시 문의 이메일로 연락해 주세요. 현장에서 팀 구성도 가능합니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">환불 정책은 어떻게 되나요? <span class="faq-arrow">+</span></button>
+      <div class="faq-a">캠프 시작 14일 전까지 전액 환불, 7일 전까지 50% 환불이 가능합니다. 7일 이내 취소는 환불이 어려우나, 다음 기수로 이월할 수 있습니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-final">
+  <div class="cta-bg-text">GO</div>
+  <div class="cta-date">2025년 8월 21일 — 24일</div>
+  <h2>지금 만들지 않으면<br><span style="color: var(--accent);">언제 만들까요?</span></h2>
+  <p>4일 후, 당신의 아이디어는 실제로 작동하는 제품이 됩니다. 자리는 20명으로 제한됩니다.</p>
+  <a href="#" class="btn-primary" style="font-size: 1rem; padding: 1.1rem 2.8rem; position: relative; z-index: 1;">얼리버드 신청하기 →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo" style="font-size: 1.2rem;">VIBE CODE</div>
+  <div>2025 바이브코드 부트캠프 · 문의: hello@vibecode.kr</div>
+  <div>© 2025 VibeCamp</div>
+</footer>
+
+<script>
+  // FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Scroll-triggered fade
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = 1; });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.curr-item, .day-card, .stat-box').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
